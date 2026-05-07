@@ -105,6 +105,8 @@ nav {
 .nav-left-container h5 {
     color: var(--text-color);
     font-size: 0.8rem;
+    font-weight: 500;
+    
 }
 
 #totalPrice {
@@ -373,6 +375,7 @@ main {
     position: relative;
 }
 
+
 .input-group {
     display: flex;
     flex-direction: column;
@@ -380,6 +383,7 @@ main {
     align-items: center;
     
 }
+
 
 .input-group label {
     margin-top: 5px;
@@ -405,7 +409,13 @@ main {
     font-size: 10px;
 }
 
-.additem-container button {
+#imageUpload.hidden{
+    display: none;
+}
+
+
+.additem-container button ,
+.edititem-container button{
     padding: 0.4rem 0.7rem;
     font-size: 18px;
     font-weight: 500;
@@ -414,7 +424,8 @@ main {
     border-radius: 4px;
 }
 
-.additem-container button:hover {
+.additem-container button:hover ,
+.edititem-container button:hover {
     background-color: var(--accent-hover);
 }
 
@@ -426,13 +437,34 @@ main {
     
 }
 
-.additem-container.active{
+.additem-container.active ,
+.edititem-container.active{
     display: flex;
 
 }
 
-.additem-container.hidden{
+.additem-container.hidden ,
+.edititem-container.hidden{
     display: none;
+}
+
+/*  upper part is for add item */
+
+.edititem-container {
+    width: 230px;
+    height: auto;
+    display: flex;
+    padding: 10px;
+        
+
+}
+
+
+.input-group img {
+    width: 190px;
+    height: 160px;
+    object-fit: cover;
+    background-color: var(--img-background);
 }
 
 /* upper part is for noti and and anything popup */
