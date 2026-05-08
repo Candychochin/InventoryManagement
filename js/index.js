@@ -242,7 +242,7 @@ function confirmEdit () {
 
 function createCard(name, img , price , quantity , index){
 
-    let totalPrice = price * quantity;
+    let totalPrice = Number( price) * Number(quantity);
 
     const div = document.createElement('div');
     div.classList.add('card')
@@ -316,15 +316,15 @@ function createCard(name, img , price , quantity , index){
 
 function renderItems(){
     cardContainer.innerHTML = '';
-
+    totalPrice = 0;
   items.forEach( (e , i) => {
     createCard( e.name ,e.image , e.price , e.quantity ,  i )
-    
-    
+    totalPrice+=(items[i].total)
+    updateHeadTotal();
 
   } )
 
-  updateHeadTotal();
+
 }
 
 
