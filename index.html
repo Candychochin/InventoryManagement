@@ -79,6 +79,7 @@
             d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
           />
         </svg>
+
         <div class="input-group">
           <label for="addItemName">Item Name</label>
           <input type="text" id="addItemName" placeholder="Add Item Name" />
@@ -130,8 +131,8 @@
 
         <div class="input-group">
           <label for="editImageUpload">Edit Image</label>
-          <input  type="text" name="editImageUpload" id="editImageUpload" class="hidden"/>
-          <img id="editImage" src="../tarot deck/img/tarot_logo_no_bg-removebg .svg" alt="">
+          <input  type="text" name="editImageUpload" id="editImageUpload" class="hidden" placeholder="Edit Image Url"/>
+          <img src="" alt="" id="editImg">
         </div>
 
         <div class="input-num-group">
@@ -196,6 +197,7 @@
           </div>
 
           <div class="card-body">
+            
             <img
               src="../tarot deck/img/tarot_logo_no_bg-removebg .svg"
               alt="item"
@@ -208,13 +210,12 @@
             <p>Quantity: <span >0</span></p>
           </div>
         </div>
-       
       </section>
     </main>
 
+    
 
-
-    <script src="./js/index.js"></script>
     <script src="./data/items.js"></script>
+    <script src="./js/index.js"></script>
   </body>
 </html>
