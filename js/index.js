@@ -3,10 +3,17 @@ let editIndex = null;
 
 let headTotalPrice = document.getElementById('totalPrice');
 
+
+
 // Upper Part is for general
 
+let notFoundContainer = document.getElementById('notFound');
 
-let searchBar = document.getElementById('searchBar');
+let notFoundText = document.getElementById('notFoundText')
+
+// upper part is for not found and noti
+
+let searchBarInput = document.getElementById('searchBar');
 
 // Upper Part is Search Bar
 
@@ -26,7 +33,11 @@ let addPriceInput = document.getElementById('addPrice');
 
 let addQuantityInput = document.getElementById('addQuantity');
 
-let addItemConfirmBtn = document.getElementById('addItemBtn')
+let addItemConfirmBtn = document.getElementById('addItemBtn');
+
+let addNotiContainer = document.getElementById('alretSameContainer');
+
+let addNotiText = document.getElementById('alretSame');
 
 // Upper Part is for Add Item
 
@@ -56,13 +67,6 @@ let deleteBtn = document.querySelectorAll('.remove-btn');
 
 // upper part is for edit
 
-function Item(itemName , imgUrl , price , quantity){
-  this.name = itemName;
-  this.image = imgUrl;
-  this.price = price;
-  this.quantity = quantity;
-}
-
 
 let cardContainer = document.querySelector('.cards-container')
 
@@ -87,6 +91,27 @@ function addItem() {
   let imgLink = addImageUploadInput.value;
   let price = addPriceInput.value;
   let quantity = addQuantityInput.value;
+
+  items.forEach( (item , i) => {
+    if( itemName === item.name){
+      addNotiContainer.style.display = 'block';
+      
+    } else {
+
+      addNotiContainer.style.display = 'none'
+
+    }
+
+
+
+  })
+  if(addNotiContainer.style.display == 'block') {
+    return;
+  }
+
+  
+  console.log('click')
+
 
   let newItem = {
         name: itemName,
@@ -138,11 +163,7 @@ notiContainer.addEventListener('click' , (e) => {
         addItemContainer.classList.remove('active');
 
         addItemContainer.classList.add('hidden');
-    } else {
-      return;
-    }
-
-    if(editItemContainer.classList.contains('active')){
+    } else  if(editItemContainer.classList.contains('active')){
       editItemContainer.classList.remove('active');
       editItemContainer.classList.add('hidden');
 
@@ -160,8 +181,56 @@ notiContainer.addEventListener('click' , (e) => {
 
 
 
+searchBarInput.addEventListener('input' , () => {
+  let searchValue = searchBarInput.value.toLowerCase();
+  
+    console.log(searchValue)
+  
+  let cards = document.querySelectorAll('.card');
+
+  cards.forEach( card => {
+    const name = card.dataset.name.toLowerCase();
+    const price = card.dataset.price;
+    const quantity = card.dataset.quantity;
+    console.log(name , price , quantity) 
+
+    
+
+    if(name.includes(searchValue) || price.includes(searchValue) || quantity.includes(searchValue)  ) {
+      card.style.display = ''
+      console.log(card)
+    } else {
+      card.style.display = 'none'
+    }
+   
+    const anyVisibleCard = Array.from(cards).some( card => card.style.display !== 'none');
+
+    if(!anyVisibleCard){
+      notFoundContainer.style.display = 'block';
+      notFoundText.textContent = "Item Not Found";
+    } else {
+      notFoundContainer.style.display = 'none';
+    }
+
+
+
+
+  });
+console.log(cards)
+
+
+
+
+})
+
+
+// upper part is for search bar
+
+
 function closeAddItemContainer() {
   
+  
+
   addItemContainer.classList.remove('active');
 
   addItemContainer.classList.add('hidden');
@@ -171,15 +240,8 @@ function closeAddItemContainer() {
 }
 
 function closeEditItemContainer(){
-    editItemContainer.classList.remove('active');
+  
 
-  editItemContainer.classList.add('hidden');
-
-  notiContainer.classList.remove('active');
-  notiContainer.classList.add('hidden');
-}
-
-function closeEditItemContainer() {
 
   editItemContainer.classList.remove('active');
   editItemContainer.classList.add('hidden');
@@ -187,6 +249,8 @@ function closeEditItemContainer() {
   notiContainer.classList.remove('active');
   notiContainer.classList.add('hidden');
 }
+
+
 
 
 
@@ -246,13 +310,17 @@ function createCard(name, img , price , quantity , index){
 
     const div = document.createElement('div');
     div.classList.add('card')
+
+    div.dataset.name = name;
+    div.dataset.price = price;
+    div.dataset.quantity = quantity
     
     items[index].total = totalPrice;
 
     div.innerHTML = `
     
          
-          <div class="dot-menu">
+          <div class="dot-menu" >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -324,6 +392,13 @@ function renderItems(){
 
   } )
 
+  if(items.length === 0){
+    notFoundContainer.style.display = 'block';
+    notFoundText.textContent = 'There is no item yet!'
+  } else {
+    notFoundContainer.style.display = 'none'
+  }
+
 
 }
 
@@ -331,6 +406,14 @@ function renderItems(){
 function updateHeadTotal () {
   headTotalPrice.textContent = `$${totalPrice}`;
 }
+
+ if(items.length == 0){
+    notFoundContainer.style.display = 'block';
+    notFoundText.textContent = 'There is no item yet!'
+  } else {
+    notFoundContainer.style.display = 'none'
+  }
+
 
 
 renderItems()

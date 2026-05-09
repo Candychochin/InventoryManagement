@@ -112,10 +112,11 @@ nav {
 }
 
 .nav-left-container h5 {
-    color: var(--muted-text);
+    color: #464b54;
     text-shadow: 0px 0px 1px var(--shadow-color);
     font-size: 0.8rem;
     font-weight: 500;
+
     
 }
 
@@ -146,7 +147,7 @@ nav {
     border: 1px solid var(--accent-hover);
 }
 
-#filterBtn {
+/* #filterBtn {
     width: 26px;
     height: 24px;
     padding: 3px;
@@ -162,7 +163,7 @@ nav {
 
 #filterBtn:hover {
     background-color: var(--border-color);
-}
+} */
 
 .nav-right-container {
     display: flex;
@@ -206,6 +207,8 @@ main {
     gap: 1rem;
     justify-content: start;
     align-items: center;
+
+    position: relative;
 }
 
 .cards-container {
@@ -213,11 +216,30 @@ main {
     height: auto;
     display: flex;
     flex-wrap: wrap;
+    justify-content: start;
    
     column-gap: 0.8rem;
     row-gap: 1rem;
     flex: 0;
+
+    
 }
+
+#notFound{
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    z-index: 105;
+    pointer-events: none;
+    color: var(--muted-text);
+    display: none;
+}
+
+
+
 
 .card {
     background-color: var(--card-color);
@@ -390,7 +412,7 @@ main {
 .noti-popup.active{
     opacity: 1;
     pointer-events: auto;
-    z-index: 100;
+    z-index: 2000;
 
 }
 
@@ -420,7 +442,20 @@ main {
     position: relative;
 }
 
+#alretSameContainer{
+    border: 1px solid var(--danger-color);
+    border-radius: 4px;
+    padding: 4px;
+    width: 100%;
+    display: none;
+}
 
+
+
+#alretSame{
+    color: var(--danger-color);
+    font-size: 12px;
+}
 
 .input-group {
     display: flex;
