@@ -98,8 +98,6 @@ function addItem() {
     return;
   }
 
-  
-
   let newItem = {
     name: itemName,
     image: imgLink,
@@ -129,13 +127,13 @@ function addItem() {
 
 editItemPopupClose.addEventListener("click", closeEditItemContainer);
 
-editConfirmBtn.addEventListener("click", (e)=>{
+editConfirmBtn.addEventListener("click", (e) => {
   e.preventDefault();
   confirmEdit();
 });
 
 editImageUploadInput.addEventListener("input", () => {
-    editImg.src = editImageUploadInput.value;
+  editImg.src = editImageUploadInput.value;
 });
 
 notiContainer.addEventListener("click", (e) => {
@@ -161,15 +159,12 @@ notiContainer.addEventListener("click", (e) => {
 searchBarInput.addEventListener("input", () => {
   let searchValue = searchBarInput.value.toLowerCase();
 
-  
-
   let cards = document.querySelectorAll(".card");
 
   cards.forEach((card) => {
     const name = card.dataset.name.toLowerCase();
     const price = card.dataset.price;
     const quantity = card.dataset.quantity;
-    
 
     if (
       name.includes(searchValue) ||
@@ -177,7 +172,6 @@ searchBarInput.addEventListener("input", () => {
       quantity.includes(searchValue)
     ) {
       card.style.display = "";
-      
     } else {
       card.style.display = "none";
     }
@@ -193,7 +187,6 @@ searchBarInput.addEventListener("input", () => {
       notFoundContainer.style.display = "none";
     }
   });
-  
 });
 
 // upper part is for search bar
@@ -360,19 +353,16 @@ if (items.length == 0) {
   notFoundContainer.style.display = "none";
 }
 
-function handleMenuPosition(dotMenuElement){
-  const toggle = dotMenuElement.querySelector('.dot-menu-toggle');
+function handleMenuPosition(dotMenuElement) {
+  const toggle = dotMenuElement.querySelector(".dot-menu-toggle");
   const rect = dotMenuElement.getBoundingClientRect();
   const screeenWiidth = window.innerWidth;
 
-  if(screeenWiidth - rect.right < 150){
-    toggle.classList.add('pull-left')
+  if (screeenWiidth - rect.right < 150) {
+    toggle.classList.add("pull-left");
   } else {
-    toggle.classList.remove('pull-left')
+    toggle.classList.remove("pull-left");
   }
-
-
-
 }
 
 renderItems();
