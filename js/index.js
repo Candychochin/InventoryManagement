@@ -1,90 +1,85 @@
 let totalPrice = null;
 let editIndex = null;
 
-let headTotalPrice = document.getElementById('totalPrice');
-
-
+let headTotalPrice = document.getElementById("totalPrice");
 
 // Upper Part is for general
 
-let notFoundContainer = document.getElementById('notFound');
+let notFoundContainer = document.getElementById("notFound");
 
-let notFoundText = document.getElementById('notFoundText')
+let notFoundText = document.getElementById("notFoundText");
 
 // upper part is for not found and noti
 
-let searchBarInput = document.getElementById('searchBar');
+let searchBarInput = document.getElementById("searchBar");
 
 // Upper Part is Search Bar
 
-let notiContainer = document.querySelector('.noti-popup')
+let notiContainer = document.querySelector(".noti-popup");
 
-let addItemPopupBtn = document.getElementById('addBtn');
+let addItemPopupBtn = document.getElementById("addBtn");
 
-let addItemPopupClose = document.getElementById('addItemClose');
+let addItemPopupClose = document.getElementById("addItemClose");
 
-let addItemContainer = document.querySelector('.additem-container')
+let addItemContainer = document.querySelector(".additem-container");
 
-let addItemNameInput = document.getElementById('addItemName');
+let addItemNameInput = document.getElementById("addItemName");
 
-let addImageUploadInput = document.getElementById('imageUpload');
+let addImageUploadInput = document.getElementById("imageUpload");
 
-let addPriceInput = document.getElementById('addPrice');
+let addPriceInput = document.getElementById("addPrice");
 
-let addQuantityInput = document.getElementById('addQuantity');
+let addQuantityInput = document.getElementById("addQuantity");
 
-let addItemConfirmBtn = document.getElementById('addItemBtn');
+let addItemConfirmBtn = document.getElementById("addItemBtn");
 
-let addNotiContainer = document.getElementById('alretSameContainer');
+let addNotiContainer = document.getElementById("alretSameContainer");
 
-let addNotiText = document.getElementById('alretSame');
+let addNotiText = document.getElementById("alretSame");
 
 // Upper Part is for Add Item
 
-let editItemContainer = document.querySelector('.edititem-container')
+let editItemContainer = document.querySelector(".edititem-container");
 
-let editItemPopupClose = document.getElementById('editItemClose');
+let editItemPopupClose = document.getElementById("editItemClose");
 
-let editItemNameInput = document.getElementById('editItemName');
+let editItemNameInput = document.getElementById("editItemName");
 
-let editImageUploadInput = document.getElementById('editImageUpload');
+let editImageUploadInput = document.getElementById("editImageUpload");
 
-let editPriceInput = document.getElementById('editPrice');
+let editPriceInput = document.getElementById("editPrice");
 
-let editQuantityInput = document.getElementById('editQuantity');
+let editQuantityInput = document.getElementById("editQuantity");
 
-let editImg = document.getElementById('editImg');
+let editImg = document.getElementById("editImg");
 
-
-
-let editConfirmBtn = document.getElementById('confirmEditBtn');
+let editConfirmBtn = document.getElementById("confirmEditBtn");
 
 // Upper Part is for Edit Item
 
-let editPopupBtn = document.querySelectorAll('.edit-btn');
+let editPopupBtn = document.querySelectorAll(".edit-btn");
 
-let deleteBtn = document.querySelectorAll('.remove-btn');
+let deleteBtn = document.querySelectorAll(".remove-btn");
 
 // upper part is for edit
 
+let cardContainer = document.querySelector(".cards-container");
 
-let cardContainer = document.querySelector('.cards-container')
+addItemPopupBtn.addEventListener("click", () => {
+  addItemContainer.classList.remove("hidden");
 
-addItemPopupBtn.addEventListener('click' , () => {
+  addItemContainer.classList.add("active");
 
-  addItemContainer.classList.remove('hidden');
+  notiContainer.classList.remove("hidden");
+  notiContainer.classList.add("active");
+});
 
-  addItemContainer.classList.add('active');
+addItemPopupClose.addEventListener("click", closeAddItemContainer);
 
-  notiContainer.classList.remove('hidden');
-  notiContainer.classList.add('active');
-
-
-})
-
-addItemPopupClose.addEventListener('click' , closeAddItemContainer)
-
-addItemConfirmBtn.addEventListener('click' , addItem)
+addItemConfirmBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  addItem();
+});
 
 function addItem() {
   let itemName = addItemNameInput.value;
@@ -92,235 +87,192 @@ function addItem() {
   let price = addPriceInput.value;
   let quantity = addQuantityInput.value;
 
-  items.forEach( (item , i) => {
-    if( itemName === item.name){
-      addNotiContainer.style.display = 'block';
-      
+  items.forEach((item, i) => {
+    if (itemName === item.name) {
+      addNotiContainer.style.display = "block";
     } else {
-
-      addNotiContainer.style.display = 'none'
-
+      addNotiContainer.style.display = "none";
     }
-
-
-
-  })
-  if(addNotiContainer.style.display == 'block') {
+  });
+  if (addNotiContainer.style.display == "block") {
     return;
   }
 
   
-  console.log('click')
-
 
   let newItem = {
-        name: itemName,
-        image: imgLink ,
-        price: price,
-        quantity: quantity,
-  }
+    name: itemName,
+    image: imgLink,
+    price: price,
+    quantity: quantity,
+  };
 
-  items.push(newItem)
+  items.push(newItem);
+  saveItems();
   renderItems();
   updateHeadTotal();
-
 
   addItemNameInput.value = null;
   addImageUploadInput.value = null;
   addPriceInput.value = null;
   addQuantityInput.value = null;
 
-  notiContainer.classList.remove('active');
-  notiContainer.classList.add('hidden');
+  notiContainer.classList.remove("active");
+  notiContainer.classList.add("hidden");
 
-  addItemContainer.classList.remove('active');
+  addItemContainer.classList.remove("active");
 
-  addItemContainer.classList.add('hidden');
-  
-
+  addItemContainer.classList.add("hidden");
 }
-
-
 
 // upper part is for add item
 
+editItemPopupClose.addEventListener("click", closeEditItemContainer);
 
+editConfirmBtn.addEventListener("click", (e)=>{
+  e.preventDefault();
+  confirmEdit();
+});
 
-editItemPopupClose.addEventListener('click' , closeEditItemContainer)
+editImageUploadInput.addEventListener("input", () => {
+    editImg.src = editImageUploadInput.value;
+});
 
-editConfirmBtn.addEventListener('click' , confirmEdit)
+notiContainer.addEventListener("click", (e) => {
+  if (e.target == notiContainer) {
+    notiContainer.classList.remove("active");
+    notiContainer.classList.add("hidden");
 
-notiContainer.addEventListener('click' , (e) => {
+    if (addItemContainer.classList.contains("active")) {
+      addItemContainer.classList.remove("active");
 
-  if(e.target == notiContainer){
-
-  
-
-    notiContainer.classList.remove('active');
-    notiContainer.classList.add('hidden');
-
-    if(addItemContainer.classList.contains('active')){
-        addItemContainer.classList.remove('active');
-
-        addItemContainer.classList.add('hidden');
-    } else  if(editItemContainer.classList.contains('active')){
-      editItemContainer.classList.remove('active');
-      editItemContainer.classList.add('hidden');
-
+      addItemContainer.classList.add("hidden");
+    } else if (editItemContainer.classList.contains("active")) {
+      editItemContainer.classList.remove("active");
+      editItemContainer.classList.add("hidden");
     } else {
       return;
     }
-
-
-    }
-
-})
-
+  }
+});
 
 // upper part is for noti container
 
-
-
-searchBarInput.addEventListener('input' , () => {
+searchBarInput.addEventListener("input", () => {
   let searchValue = searchBarInput.value.toLowerCase();
-  
-    console.log(searchValue)
-  
-  let cards = document.querySelectorAll('.card');
 
-  cards.forEach( card => {
+  
+
+  let cards = document.querySelectorAll(".card");
+
+  cards.forEach((card) => {
     const name = card.dataset.name.toLowerCase();
     const price = card.dataset.price;
     const quantity = card.dataset.quantity;
-    console.log(name , price , quantity) 
-
     
 
-    if(name.includes(searchValue) || price.includes(searchValue) || quantity.includes(searchValue)  ) {
-      card.style.display = ''
-      console.log(card)
+    if (
+      name.includes(searchValue) ||
+      price.includes(searchValue) ||
+      quantity.includes(searchValue)
+    ) {
+      card.style.display = "";
+      
     } else {
-      card.style.display = 'none'
+      card.style.display = "none";
     }
-   
-    const anyVisibleCard = Array.from(cards).some( card => card.style.display !== 'none');
 
-    if(!anyVisibleCard){
-      notFoundContainer.style.display = 'block';
+    const anyVisibleCard = Array.from(cards).some(
+      (card) => card.style.display !== "none",
+    );
+
+    if (!anyVisibleCard) {
+      notFoundContainer.style.display = "block";
       notFoundText.textContent = "Item Not Found";
     } else {
-      notFoundContainer.style.display = 'none';
+      notFoundContainer.style.display = "none";
     }
-
-
-
-
   });
-console.log(cards)
-
-
-
-
-})
-
+  
+});
 
 // upper part is for search bar
 
-
 function closeAddItemContainer() {
-  
-  
+  addItemContainer.classList.remove("active");
 
-  addItemContainer.classList.remove('active');
+  addItemContainer.classList.add("hidden");
 
-  addItemContainer.classList.add('hidden');
-
-  notiContainer.classList.remove('active');
-  notiContainer.classList.add('hidden');
+  notiContainer.classList.remove("active");
+  notiContainer.classList.add("hidden");
 }
 
-function closeEditItemContainer(){
-  
+function closeEditItemContainer() {
+  editItemContainer.classList.remove("active");
+  editItemContainer.classList.add("hidden");
 
-
-  editItemContainer.classList.remove('active');
-  editItemContainer.classList.add('hidden');
-
-  notiContainer.classList.remove('active');
-  notiContainer.classList.add('hidden');
+  notiContainer.classList.remove("active");
+  notiContainer.classList.add("hidden");
 }
 
-
-
-
-
-function removeItem(index){
-  items.splice(index,1)
+function removeItem(index) {
+  items.splice(index, 1);
+  saveItems();
   renderItems();
-
 }
 
+function editItemPopup(index) {
+  editItemContainer.classList.remove("hidden");
 
-function editItemPopup (index) {
-  editItemContainer.classList.remove('hidden');
+  editItemContainer.classList.add("active");
 
-  editItemContainer.classList.add('active');
-
-  notiContainer.classList.remove('hidden');
-  notiContainer.classList.add('active');
+  notiContainer.classList.remove("hidden");
+  notiContainer.classList.add("active");
 
   editIndex = index;
 
   editItemNameInput.value = items[index].name;
-  editImageUploadInput.value = items[index].image
-  
+  editImageUploadInput.value = items[index].image;
+
   editImg.src = items[index].image;
   editImg.alt = items[index].name;
-  
+
   editPriceInput.value = items[index].price;
   editQuantityInput.value = items[index].quantity;
-
-
 }
 
-function confirmEdit () {
-
-
+function confirmEdit() {
   let editedItem = {
-      name : editItemNameInput.value ,
-      image : editImg.src ,
-      price : editPriceInput.value ,
-      quantity : editQuantityInput.value
-  }
+    name: editItemNameInput.value,
+    image: editImageUploadInput.value,
+    price: editPriceInput.value,
+    quantity: editQuantityInput.value,
+  };
 
   items[editIndex] = editedItem;
-
+  saveItems();
   editIndex = null;
 
   renderItems();
-
   closeEditItemContainer();
-
 }
 
+function createCard(name, img, price, quantity, index) {
+  let totalPrice = Number(price) * Number(quantity);
 
-function createCard(name, img , price , quantity , index){
+  const div = document.createElement("div");
+  div.classList.add("card");
 
-    let totalPrice = Number( price) * Number(quantity);
+  div.dataset.name = name;
+  div.dataset.price = price;
+  div.dataset.quantity = quantity;
 
-    const div = document.createElement('div');
-    div.classList.add('card')
+  items[index].total = totalPrice;
 
-    div.dataset.name = name;
-    div.dataset.price = price;
-    div.dataset.quantity = quantity
-    
-    items[index].total = totalPrice;
-
-    div.innerHTML = `
+  div.innerHTML = `
     
          
-          <div class="dot-menu" >
+          <div class="dot-menu" onmouseenter='handleMenuPosition(this)'>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -373,47 +325,54 @@ function createCard(name, img , price , quantity , index){
             <p>Total: $${totalPrice}</p>
           </div>
     
-    `
-    
-  cardContainer.appendChild(div)
+    `;
+
+  cardContainer.appendChild(div);
 
   return totalPrice;
-
-  
 }
 
-function renderItems(){
-    cardContainer.innerHTML = '';
-    totalPrice = 0;
-  items.forEach( (e , i) => {
-    createCard( e.name ,e.image , e.price , e.quantity ,  i )
-    totalPrice+=(items[i].total)
+function renderItems() {
+  cardContainer.innerHTML = "";
+  totalPrice = 0;
+  items.forEach((e, i) => {
+    createCard(e.name, e.image, e.price, e.quantity, i);
+    totalPrice += items[i].total;
     updateHeadTotal();
+  });
 
-  } )
-
-  if(items.length === 0){
-    notFoundContainer.style.display = 'block';
-    notFoundText.textContent = 'There is no item yet!'
+  if (items.length === 0) {
+    notFoundContainer.style.display = "block";
+    notFoundText.textContent = "There is no item yet!";
   } else {
-    notFoundContainer.style.display = 'none'
+    notFoundContainer.style.display = "none";
   }
-
-
 }
 
-
-function updateHeadTotal () {
+function updateHeadTotal() {
   headTotalPrice.textContent = `$${totalPrice}`;
 }
 
- if(items.length == 0){
-    notFoundContainer.style.display = 'block';
-    notFoundText.textContent = 'There is no item yet!'
+if (items.length == 0) {
+  notFoundContainer.style.display = "block";
+  notFoundText.textContent = "There is no item yet!";
+} else {
+  notFoundContainer.style.display = "none";
+}
+
+function handleMenuPosition(dotMenuElement){
+  const toggle = dotMenuElement.querySelector('.dot-menu-toggle');
+  const rect = dotMenuElement.getBoundingClientRect();
+  const screeenWiidth = window.innerWidth;
+
+  if(screeenWiidth - rect.right < 150){
+    toggle.classList.add('pull-left')
   } else {
-    notFoundContainer.style.display = 'none'
+    toggle.classList.remove('pull-left')
   }
 
 
 
-renderItems()
+}
+
+renderItems();

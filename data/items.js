@@ -9,9 +9,18 @@ let items = [
     // } ,
     
 
-
-
-
 ]
 
+function saveItems() {
+    localStorage.setItem('items', JSON.stringify(items));
+}
 
+function loadItems() {
+    const storedItems = localStorage.getItem('items');
+    if (storedItems) {
+        items = JSON.parse(storedItems);
+    }
+}
+
+// Load items when the script is loaded
+loadItems();
